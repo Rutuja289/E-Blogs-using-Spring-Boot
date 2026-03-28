@@ -135,10 +135,8 @@ public class PostController {
     if (verifyPostRequest == null || Strings.isBlank(verifyPostRequest.getTitle()) || Strings.isBlank(verifyPostRequest.getContent())) {
       return ResponseEntity.badRequest().body(new UpdatePostResponse("error", "invalid input", null));
     }
-//    VerifyPostResponse response = postService.verifyPost(verifyPostRequest);
-//    TurnitinResponse response = turnitin.checkPlagarism(verifyPostRequest.getContent());
-//    if (response.getStatus().equalsIgnoreCase("error")) return ResponseEntity.badRequest().body(response);
-    TurnitinResponse response = new TurnitinResponse("verification skipped");
+    VerifyPostResponse response = postService.verifyPost(verifyPostRequest);
+    if (response.getStatus().equalsIgnoreCase("error")) return ResponseEntity.badRequest().body(response);
     
     return ResponseEntity.ok(response);
   }
