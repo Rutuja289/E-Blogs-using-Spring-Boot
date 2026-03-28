@@ -80,6 +80,23 @@
           <tbody>
           </tbody>
         </table>
+        
+        <div style="text-align:center; margin-top:20px;">
+    <a th:if="${currentPage > 0}" 
+       th:href="@{/dashboard(page=${currentPage - 1}, size=${pageSize})}"
+       class="btn btn-secondary me-2">
+       Previous
+    </a>
+    <span> Page [[${currentPage + 1}]] of [[${totalPages}]] </span>
+    <a th:if="${currentPage < totalPages - 1}" 
+       th:href="@{/dashboard(page=${currentPage + 1}, size=${pageSize})}"
+       class="btn btn-secondary ms-2">
+       Next
+    </a>
+
+
+
+</div>
       </div>
     </div>
   </div>

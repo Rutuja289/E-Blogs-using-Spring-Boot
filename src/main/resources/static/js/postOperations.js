@@ -20,7 +20,11 @@ addPostForm._element.addEventListener('hidden.bs.modal', function () {
   }
 });
 
-const moduleTable = $('#blogsTable').DataTable();
+const moduleTable = $('#blogsTable').DataTable({
+  paging: false,   // ❌ disable frontend pagination
+  searching: true,
+  info: false
+});
 
 const verifyNewBlog = (e) => {
   e.preventDefault();

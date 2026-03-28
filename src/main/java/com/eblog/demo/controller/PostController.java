@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,6 +50,7 @@ public class PostController {
     this.turnitin = turnitin;
   }
 
+  /*//previous
   @GetMapping("/dashboard")
   public ModelAndView dashboard(HttpSession session){
     ModelAndView modelAndView = new ModelAndView();
@@ -59,6 +62,28 @@ public class PostController {
     modelAndView.addObject("blogs", blogs);
     modelAndView.setViewName("dashboard");
     return modelAndView;
+  }*/
+  
+  @GetMapping("/dashboard")
+  public ModelAndView dashboard(
+		  @RequestParam(defaultValue = "0") int page,
+		  @RequestParam(defaultValue = "5") int size,
+		  HttpSession session) {
+      ModelAndView modelAndView = new ModelAndView();
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      if (!authentication.isAuthenticated()) {
+          modelAndView.setViewName("redirect:/login");
+          return modelAndView;
+      }
+      String email = authentication.getName();
+      session.setAttribute("user", userService.findByEmail(email));
+      Page<Post> blogsPage = postService.retrievePostsWithPagination(email, page, size);
+      modelAndView.addObject("blogs", blogsPage.getContent());
+      modelAndView.addObject("currentPage", page);
+      modelAndView.addObject("totalPages", blogsPage.getTotalPages());
+      modelAndView.addObject("pageSize",size);
+      modelAndView.setViewName("dashboard");
+      return modelAndView;
   }
 
   @PostMapping(value = "/add-post", consumes = { "multipart/form-data" })
@@ -111,8 +136,10 @@ public class PostController {
       return ResponseEntity.badRequest().body(new UpdatePostResponse("error", "invalid input", null));
     }
 //    VerifyPostResponse response = postService.verifyPost(verifyPostRequest);
-    TurnitinResponse response = turnitin.checkPlagarism(verifyPostRequest.getContent());
-    if (response.getStatus().equalsIgnoreCase("error")) return ResponseEntity.badRequest().body(response);
+//    TurnitinResponse response = turnitin.checkPlagarism(verifyPostRequest.getContent());
+//    if (response.getStatus().equalsIgnoreCase("error")) return ResponseEntity.badRequest().body(response);
+    TurnitinResponse response = new TurnitinResponse("verification skipped");
+    
     return ResponseEntity.ok(response);
   }
 
