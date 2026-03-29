@@ -62,25 +62,3 @@ Scalable backend with pagination
 Production-like API structure
 👩‍💻 Author
 Rutuja Chaudhari
-1. Clone the repository
-2. Open the project in IntelliJ / Eclipse
-3. Create a MySQL database:
-
-eblogs
-
-4. Update "application.properties":
-
-spring.datasource.url=jdbc:mysql://localhost:3306/eblogs
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-
-5. Run the Spring Boot application
-6. Test APIs using Postman
-
-📂 API Base URL
-
-http://localhost:8080
-
-👩‍💻 Author
-
-Rutuja Chaudhari
