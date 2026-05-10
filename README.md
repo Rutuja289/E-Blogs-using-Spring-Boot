@@ -119,8 +119,14 @@ pagination, search functionality, and is fully containerized using Docker.
 
 
 ### Docker Screenshots
+Docker Containers Running
 
-(Add your screenshots here)
+
+Application Started Successfully
+
+
+Application in Browser
+https://github.com/Rutuja289/E-Blogs-using-Spring-Boot/blob/docker-aws/screenshots/application.png?raw=true
 
 
 
