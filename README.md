@@ -120,7 +120,7 @@ pagination, search functionality, and is fully containerized using Docker.
 
 ### Docker Screenshots
 Docker Containers Running
-
+https://github.com/Rutuja289/E-Blogs-using-Spring-Boot/blob/docker-aws/screenshots/docker.png?raw=true
 
 Application Started Successfully
 
